@@ -291,6 +291,10 @@ Os containers foram executados manualmente na máquina através comando:
 $ docker-compose up -d
 ```
 
+Podemos visualizar os dados coletados em [grafana](http://18.229.156.110:3000/) (user: admin - pass: giropops). São apresentados alumas telas das métricas capturadas:
+
+![Image](https://i.ibb.co/nCkYZxX/cpu.png)
+![Image](https://i.ibb.co/47Pwf5c/memo.png)
 
 
 
