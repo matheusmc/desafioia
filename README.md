@@ -298,9 +298,11 @@ Podemos visualizar os dados coletados em [grafana](http://18.229.156.110:3000/) 
 
 
 
+## Considerações Finais
 
+Sobre o desafio... não achei tão complicado mas de certa forma ele não é pequeno, pois existe uma quantidade considerável de passos até a conclusão. A maior dificuldade foi em relação ao tempo que tive livre para fazê-lo. Outro  ponto foi na parte do monitoramento tive alguns entraves, gostaria de ter executado o Alert Megenger para comunicar no Slack mas não funcionou, mesmo já tendo mexido antes com isso.
 
-
+Espero que gostem desse trabalho!
 
 
 
