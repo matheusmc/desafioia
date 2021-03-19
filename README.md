@@ -211,7 +211,79 @@ Por fim no menu CI/CD do GitLab podemos executar os pipelines tanto no modo auto
 
 Nesse Laboratório utilizei uma stack de monitoramento que utiliza o Prometheus, Grafana, Cadvisor, Node Exporte. Nesse estágio utilizei os passos disponíveis no repositório https://github.com/badtuxx/giropops-monitoring.
 
+No diretório **aplicacoes/monitoring** estão os arquivos para executar os container das aplicações com destaque para o arquivo docker-compose.yml:
 
+```
+version: '3.2'
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+    - 9090:9090
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    - ./alert.rules:/etc/prometheus/alert.rules:ro
+    depends_on:
+    - cadvisor
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+    - 8080:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+    - redis
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+    - 6379:6379
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+    env_file:
+      - grafana.config    
+    ports:
+      - 3000:3000
+
+  node-exporter:
+    container_name: nodeexporter
+    image: linuxtips/node-exporter_alpine
+    hostname: '{{.Node.ID}}'
+    depends_on:
+      - prometheus
+    volumes:
+      - /proc:/usr/proc
+      - /sys:/usr/sys
+      - /:/rootfs
+    ports:
+      - 9100:9100
+  
+  alertmanager:
+    image: linuxtips/alertmanager_alpine
+    container_name: alertmanager
+    volumes:
+      - ./conf/alertmanager/:/etc/alertmanager/
+    depends_on:
+      - prometheus
+    ports:
+      - 9093:9093
+
+volumes:
+    prometheus_data:
+    grafana_data:
+```
 
 
 
