@@ -1,0 +1,25 @@
+deploy:
+  stage: deploy
+  when: manual
+  tags:
+    - monitoramento_deploy
+  script:
+    - apk add --no-cache docker-compose
+    - docker-compose up -d
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - grafana.config
+      - conf/
+      - dockerfiles/
+
+
+undeploy:
+  stage: deploy
+  when: manual
+  tags:
+    - monitoramento_deploy
+  script:
+    - apk add --no-cache docker-compose
+    - docker-compose down
+
