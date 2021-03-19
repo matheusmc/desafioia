@@ -285,8 +285,11 @@ volumes:
     grafana_data:
 ```
 
+Os containers foram executados manualmente na máquina através comando:
 
-
+```
+$ docker-compose up -d
+```
 
 
 
